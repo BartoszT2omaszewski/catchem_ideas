@@ -89,10 +89,10 @@ class HomePage extends StatelessWidget {
                         boxShadow: [BoxShadow(blurRadius: 10.0)],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
