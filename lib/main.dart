@@ -1,3 +1,4 @@
+import 'package:catchem_ideas/home/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const Scaffold(),
+      home: const HomePage(),
     );
   }
 }
