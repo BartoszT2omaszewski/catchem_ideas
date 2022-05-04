@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "134466005931",
+    "project_id": "idea-catcher01",
+    "storage_bucket": "idea-catcher01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134466005931:android:8b526eae520f395f6340ee",
+        "android_client_info": {
+          "package_name": "com.bartosztomaszewski.catchem_ideas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134466005931-bkfmade5ukj21iaper8bd807sdevq57b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw5hwxdJ9ifrCtKEb6QWFYo7FOr7ipYIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134466005931-bkfmade5ukj21iaper8bd807sdevq57b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "134466005931-o8m1g8rf4jvfu96e2kv3o769ogo3d92k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deflutterbtomaszewski.ideacatcher"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:134466005931:android:75f207c6cab1daa96340ee",
+        "android_client_info": {
+          "package_name": "com.deflutterbtomaszewski.idea_catcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "134466005931-bkfmade5ukj21iaper8bd807sdevq57b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAw5hwxdJ9ifrCtKEb6QWFYo7FOr7ipYIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "134466005931-bkfmade5ukj21iaper8bd807sdevq57b.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "134466005931-o8m1g8rf4jvfu96e2kv3o769ogo3d92k.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.deflutterbtomaszewski.ideacatcher"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
