@@ -1,15 +1,28 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../calendar/pages/calendar_page.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({
+  HomePage({
     Key? key,
   }) : super(key: key);
+
+  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          FirebaseFirestore.instance.collection('ideas').add(
+            {
+              'title': controller.text,
+            },
+          );
+        },
+        child: const Icon(Icons.add),
+      ),
       backgroundColor: const Color.fromARGB(224, 140, 115, 207),
       body: SafeArea(
         child: Column(
@@ -88,16 +101,75 @@ class HomePage extends StatelessWidget {
                             topRight: Radius.circular(30)),
                         boxShadow: [BoxShadow(blurRadius: 10.0)],
                       ),
-                      child: GridView(
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                          ),
-                          children: const [
-                            IdeaWidget('1'),
-                            IdeaWidget('2'),
-                            IdeaWidget('3'),
-                          ]),
+                      child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('ideas')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text('Error');
+                            }
+
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Text('Loading');
+                            }
+
+                            final documents = snapshot.data!.docs;
+
+                            void submit() {
+                              FirebaseFirestore.instance
+                                  .collection('ideas')
+                                  .add(
+                                {
+                                  'title': controller.text,
+                                },
+                              );
+                              Navigator.of(context).pop();
+                            }
+
+                            Future openDialog() => showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Text('Your Idea'),
+                                      content: TextField(
+                                        controller: controller,
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: submit,
+                                          child: const Text('Submit'),
+                                        )
+                                      ],
+                                    ));
+
+                            return ListView(
+                              children: [
+                                for (final document in documents) ...[
+                                  Dismissible(
+                                    key: ValueKey(document.id),
+                                    onDismissed: (_) {
+                                      FirebaseFirestore.instance
+                                          .collection('ideas')
+                                          .doc(document.id)
+                                          .delete();
+                                    },
+                                    child: IdeaWidget(
+                                      document['title'],
+                                    ),
+                                  ),
+                                ],
+                                Container(
+                                    padding: const EdgeInsets.all(16),
+                                    child: ElevatedButton(
+                                      child: const Text('Add idea'),
+                                      onPressed: () {
+                                        openDialog();
+                                      },
+                                    )),
+                              ],
+                            );
+                          }),
                     ),
                   )
                 ],
@@ -126,8 +198,8 @@ class IdeaWidget extends StatelessWidget {
           left: 15,
           right: 15,
         ),
-        height: 200,
-        width: 250,
+        height: 100,
+        width: 200,
         decoration: const BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.all(Radius.circular(20)),
