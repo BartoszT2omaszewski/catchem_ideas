@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 
 import '../../calendar/pages/calendar_page.dart';
 
@@ -13,15 +14,26 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          FirebaseFirestore.instance.collection('ideas').add(
-            {
-              'title': controller.text,
-            },
-          );
-        },
-        child: const Icon(Icons.add),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.add_event,
+        children: [
+          SpeedDialChild(child: const Icon(Icons.mic), label: 'Voice'),
+          SpeedDialChild(
+              child: const Icon(Icons.edit_note),
+              label: 'Text',
+              onTap: () {
+                FirebaseFirestore.instance.collection('ideas').add(
+                  {
+                    'title': controller.text,
+                  },
+                );
+              }),
+          SpeedDialChild(
+            child: const Icon(Icons.camera_alt),
+            label: 'Picture',
+          ),
+          SpeedDialChild(child: const Icon(Icons.videocam), label: 'Video'),
+        ],
       ),
       backgroundColor: const Color.fromARGB(224, 140, 115, 207),
       body: SafeArea(
@@ -126,6 +138,8 @@ class HomePage extends StatelessWidget {
                                 },
                               );
                               Navigator.of(context).pop();
+
+                              controller.clear();
                             }
 
                             Future openDialog() => showDialog(
@@ -154,7 +168,7 @@ class HomePage extends StatelessWidget {
                                           .doc(document.id)
                                           .delete();
                                     },
-                                    child: IdeaWidget(
+                                    child: IdeaTileWidget(
                                       document['title'],
                                     ),
                                   ),
@@ -182,8 +196,8 @@ class HomePage extends StatelessWidget {
   }
 }
 
-class IdeaWidget extends StatelessWidget {
-  const IdeaWidget(
+class IdeaTileWidget extends StatelessWidget {
+  const IdeaTileWidget(
     this.title, {
     Key? key,
   }) : super(key: key);

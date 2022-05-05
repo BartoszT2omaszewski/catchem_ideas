@@ -37,6 +37,7 @@ dependencies:
   syncfusion_flutter_calendar: ^20.1.47
   firebase_core: ^1.14.1
   cloud_firestore: ^3.1.12
+  flutter_speed_dial: ^6.0.0
 
 dev_dependencies:
   flutter_test:
