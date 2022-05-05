@@ -40,14 +40,14 @@ class RootPage extends StatelessWidget {
         if (user == null) {
           return LoginPage();
         }
-        return HomePagee(user: user);
+        return AccountPage(user: user);
       },
     );
   }
 }
 
-class HomePagee extends StatelessWidget {
-  const HomePagee({
+class AccountPage extends StatelessWidget {
+  const AccountPage({
     Key? key,
     required this.user,
   }) : super(key: key);
@@ -58,7 +58,21 @@ class HomePagee extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Text("You're logged in as ${user.email}"),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text("You're logged in as ${user.email}"),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                FirebaseAuth.instance.signOut();
+              },
+              child: const Text('Log out'),
+            ),
+          ],
+        ),
       ),
     );
   }
