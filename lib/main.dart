@@ -1,3 +1,4 @@
+import 'package:catchem_ideas/auth/account_page.dart';
 import 'package:catchem_ideas/auth/login_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -40,40 +41,8 @@ class RootPage extends StatelessWidget {
         if (user == null) {
           return LoginPage();
         }
-        return AccountPage(user: user);
+        return AccountPage(email: user.email);
       },
-    );
-  }
-}
-
-class AccountPage extends StatelessWidget {
-  const AccountPage({
-    Key? key,
-    required this.user,
-  }) : super(key: key);
-
-  final User user;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text("You're logged in as ${user.email}"),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                FirebaseAuth.instance.signOut();
-              },
-              child: const Text('Log out'),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

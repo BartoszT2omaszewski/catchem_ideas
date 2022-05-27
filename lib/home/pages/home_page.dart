@@ -1,7 +1,7 @@
+import 'package:catchem_ideas/auth/account_page.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
-
 import '../../calendar/pages/calendar_page.dart';
 
 class HomePage extends StatelessWidget {
@@ -47,20 +47,34 @@ class HomePage extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: const [
-                        Text(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        const Text(
                           "Catch'em ideas",
                           style: TextStyle(
                               color: Color(0xFF00003f),
-                              fontSize: 28,
+                              fontSize: 34,
                               fontWeight: FontWeight.bold),
                         ),
                         Padding(
-                          padding: EdgeInsets.only(right: 12),
-                          child: ElevatedButton(
-                            onPressed: null,
-                            child: Text('Quick'),
+                          padding: const EdgeInsets.only(right: 12),
+                          child: Row(
+                            children: [
+                              IconButton(
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const AccountPage(
+                                                  email: "email")),
+                                    );
+                                  },
+                                  icon: const Icon(
+                                    Icons.person,
+                                    size: 38,
+                                  )),
+                            ],
                           ),
                         ),
                       ],
@@ -72,7 +86,10 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 60,
               child: Padding(
-                padding: const EdgeInsets.only(left: 20, right: 15, bottom: 10),
+                padding: const EdgeInsets.only(
+                  left: 20,
+                  right: 15,
+                ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -91,7 +108,10 @@ class HomePage extends StatelessWidget {
                                 builder: (context) => const CalendarPage()),
                           );
                         },
-                        icon: const Icon(Icons.calendar_today)),
+                        icon: const Icon(
+                          Icons.calendar_today,
+                          size: 34,
+                        )),
                   ],
                 ),
               ),
@@ -100,7 +120,7 @@ class HomePage extends StatelessWidget {
               child: Column(
                 children: [
                   const Padding(
-                    padding: EdgeInsets.only(bottom: 18.0),
+                    padding: EdgeInsets.only(bottom: 6.0),
                   ),
                   Expanded(
                     flex: 1,
