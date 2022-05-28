@@ -1,4 +1,4 @@
-import 'package:catchem_ideas/home/pages/home_page.dart';
+import 'package:catchem_ideas/app/features/home/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

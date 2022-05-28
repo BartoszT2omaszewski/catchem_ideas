@@ -1,5 +1,5 @@
-import 'package:catchem_ideas/auth/account_page.dart';
-import 'package:catchem_ideas/home/cubit/home_cubit.dart';
+import 'package:catchem_ideas/app/features/auth/account_page.dart';
+import 'package:catchem_ideas/app/features/home/cubit/home_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
