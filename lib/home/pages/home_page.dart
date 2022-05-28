@@ -1,6 +1,8 @@
 import 'package:catchem_ideas/auth/account_page.dart';
+import 'package:catchem_ideas/home/cubit/home_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../../calendar/pages/calendar_page.dart';
 
@@ -133,21 +135,21 @@ class HomePage extends StatelessWidget {
                             topRight: Radius.circular(30)),
                         boxShadow: [BoxShadow(blurRadius: 10.0)],
                       ),
-                      child: StreamBuilder<QuerySnapshot>(
-                          stream: FirebaseFirestore.instance
-                              .collection('ideas')
-                              .snapshots(),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Error');
+                      child: BlocProvider(
+                        create: (context) => HomeCubit()..start(),
+                        child: BlocBuilder<HomeCubit, HomeState>(
+                          builder: (context, state) {
+                            if (state.errorMessage.isNotEmpty) {
+                              return Text('Error: ${state.errorMessage}');
                             }
 
-                            if (snapshot.connectionState ==
-                                ConnectionState.waiting) {
-                              return const Text('Loading');
+                            if (state.isLoading) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
                             }
 
-                            final documents = snapshot.data!.docs;
+                            final documents = state.documents;
 
                             void submit() {
                               FirebaseFirestore.instance
@@ -203,7 +205,81 @@ class HomePage extends StatelessWidget {
                                     )),
                               ],
                             );
-                          }),
+
+                            return StreamBuilder<QuerySnapshot>(
+                                stream: FirebaseFirestore.instance
+                                    .collection('ideas')
+                                    .snapshots(),
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasError) {
+                                    return const Text('Error');
+                                  }
+
+                                  if (snapshot.connectionState ==
+                                      ConnectionState.waiting) {
+                                    return const Text('Loading');
+                                  }
+
+                                  final documents = snapshot.data!.docs;
+
+                                  void submit() {
+                                    FirebaseFirestore.instance
+                                        .collection('ideas')
+                                        .add(
+                                      {
+                                        'title': controller.text,
+                                      },
+                                    );
+                                    Navigator.of(context).pop();
+
+                                    controller.clear();
+                                  }
+
+                                  Future openDialog() => showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text('Your Idea'),
+                                            content: TextField(
+                                              controller: controller,
+                                            ),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: submit,
+                                                child: const Text('Submit'),
+                                              )
+                                            ],
+                                          ));
+
+                                  return ListView(
+                                    children: [
+                                      for (final document in documents) ...[
+                                        Dismissible(
+                                          key: ValueKey(document.id),
+                                          onDismissed: (_) {
+                                            FirebaseFirestore.instance
+                                                .collection('ideas')
+                                                .doc(document.id)
+                                                .delete();
+                                          },
+                                          child: IdeaTileWidget(
+                                            document['title'],
+                                          ),
+                                        ),
+                                      ],
+                                      Container(
+                                          padding: const EdgeInsets.all(16),
+                                          child: ElevatedButton(
+                                            child: const Text('Add idea'),
+                                            onPressed: () {
+                                              openDialog();
+                                            },
+                                          )),
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                      ),
                     ),
                   )
                 ],
