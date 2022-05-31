@@ -1,14 +1,18 @@
+import 'package:catchem_ideas/app/cubit/root_cubit.dart';
 import 'package:catchem_ideas/app/features/home/pages/home_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AccountPage extends StatelessWidget {
   const AccountPage({
     Key? key,
     required this.email,
+    required this.user,
   }) : super(key: key);
 
   final String? email;
+  final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,9 @@ class AccountPage extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: ((context) => HomePage()),
+                            builder: ((context) => HomePage(
+                                  user: user,
+                                )),
                           ),
                         );
                       },
@@ -46,7 +52,7 @@ class AccountPage extends StatelessWidget {
                     ),
                     ElevatedButton(
                       onPressed: () {
-                        FirebaseAuth.instance.signOut();
+                        context.read<RootCubit>().signOut();
                       },
                       child: const Text('Log out'),
                     ),

@@ -1,16 +1,25 @@
 import 'package:catchem_ideas/app/features/auth/account_page.dart';
 import 'package:catchem_ideas/app/features/home/cubit/home_cubit.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import '../../calendar/pages/calendar_page.dart';
 
-class HomePage extends StatelessWidget {
-  HomePage({
+class HomePage extends StatefulWidget {
+  const HomePage({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
+  final User user;
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   final controller = TextEditingController();
 
   @override
@@ -67,9 +76,10 @@ class HomePage extends StatelessWidget {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              const AccountPage(
-                                                  email: "email")),
+                                          builder: (context) => AccountPage(
+                                                email: widget.user.email,
+                                                user: widget.user,
+                                              )),
                                     );
                                   },
                                   icon: const Icon(
@@ -205,78 +215,6 @@ class HomePage extends StatelessWidget {
                                     )),
                               ],
                             );
-
-                            return StreamBuilder<QuerySnapshot>(
-                                stream: FirebaseFirestore.instance
-                                    .collection('ideas')
-                                    .snapshots(),
-                                builder: (context, snapshot) {
-                                  if (snapshot.hasError) {
-                                    return const Text('Error');
-                                  }
-
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.waiting) {
-                                    return const Text('Loading');
-                                  }
-
-                                  final documents = snapshot.data!.docs;
-
-                                  void submit() {
-                                    FirebaseFirestore.instance
-                                        .collection('ideas')
-                                        .add(
-                                      {
-                                        'title': controller.text,
-                                      },
-                                    );
-                                    Navigator.of(context).pop();
-
-                                    controller.clear();
-                                  }
-
-                                  Future openDialog() => showDialog(
-                                      context: context,
-                                      builder: (context) => AlertDialog(
-                                            title: const Text('Your Idea'),
-                                            content: TextField(
-                                              controller: controller,
-                                            ),
-                                            actions: [
-                                              TextButton(
-                                                onPressed: submit,
-                                                child: const Text('Submit'),
-                                              )
-                                            ],
-                                          ));
-
-                                  return ListView(
-                                    children: [
-                                      for (final document in documents) ...[
-                                        Dismissible(
-                                          key: ValueKey(document.id),
-                                          onDismissed: (_) {
-                                            FirebaseFirestore.instance
-                                                .collection('ideas')
-                                                .doc(document.id)
-                                                .delete();
-                                          },
-                                          child: IdeaTileWidget(
-                                            document['title'],
-                                          ),
-                                        ),
-                                      ],
-                                      Container(
-                                          padding: const EdgeInsets.all(16),
-                                          child: ElevatedButton(
-                                            child: const Text('Add idea'),
-                                            onPressed: () {
-                                              openDialog();
-                                            },
-                                          )),
-                                    ],
-                                  );
-                                });
                           },
                         ),
                       ),
