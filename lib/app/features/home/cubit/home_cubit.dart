@@ -56,3 +56,39 @@ class HomeCubit extends Cubit<HomeState> {
     return super.close();
   }
 }
+
+// Future submit(
+//   BuildContext context,
+//    submit,
+//   controller,
+// ) async {
+//   FirebaseFirestore.instance.collection('ideas').add(
+//     {
+//       'title': controller.text,
+//     },
+//   );
+//   Navigator.of(context).pop();
+
+//   controller.clear();
+// }
+
+// Future openDialog(
+//   BuildContext context,
+//   submit,
+//   controller,
+// ) async {
+//   return showDialog(
+//       context: context,
+//       builder: (context) => AlertDialog(
+//             title: const Text('Your Idea'),
+//             content: TextField(
+//               controller: controller,
+//             ),
+//             actions: [
+//               TextButton(
+//                 onPressed: submit,
+//                 child: const Text('Submit'),
+//               )
+//             ],
+//           ));
+// }

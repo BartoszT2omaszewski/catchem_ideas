@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: "Catch'em ideas",
         theme: ThemeData(
-          primarySwatch: Colors.green,
+          primarySwatch: Colors.deepPurple,
         ),
         home: const RootPage(),
       ),
