@@ -92,6 +92,25 @@ class HomePageBodyState extends State<HomePageBody> {
                           children: [
                             for (final document in documents) ...[
                               Dismissible(
+                                secondaryBackground: const DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                  ),
+                                  child: Icon(
+                                    Icons.delete,
+                                  ),
+                                ),
+                                background: const DecoratedBox(
+                                  decoration: BoxDecoration(
+                                    color: Colors.green,
+                                  ),
+                                  child: Icon(Icons.settings),
+                                ),
+                                confirmDismiss: (direction) async {
+                                  // only from right to left
+                                  return direction ==
+                                      DismissDirection.endToStart;
+                                },
                                 key: ValueKey(document.id),
                                 onDismissed: (_) {
                                   FirebaseFirestore.instance

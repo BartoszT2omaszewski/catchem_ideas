@@ -16,8 +16,8 @@ class IdeaTileWidget extends StatelessWidget {
           left: 15,
           right: 15,
         ),
-        height: 100,
-        width: 200,
+        height: MediaQuery.of(context).size.height * 0.1,
+        width: MediaQuery.of(context).size.width * 1.0,
         decoration: const BoxDecoration(
           color: Colors.black12,
           borderRadius: BorderRadius.all(Radius.circular(20)),
