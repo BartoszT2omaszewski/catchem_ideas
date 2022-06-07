@@ -1,8 +1,8 @@
-import 'package:catchem_ideas/app/features/auth/account_page.dart';
+
+import 'package:catchem_ideas/app/features/auth/user_profile.dart';
 import 'package:catchem_ideas/app/features/home/cubit/home_cubit.dart';
 import 'package:catchem_ideas/app/features/home/pages/home_body.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
@@ -10,10 +10,8 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 class HomePage extends StatefulWidget {
   const HomePage({
     Key? key,
-    required this.user,
   }) : super(key: key);
 
-  final User user;
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -52,9 +50,7 @@ class _HomePageState extends State<HomePage> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AccountPage(
-                                  email: widget.user.email,
-                                  user: widget.user,
+                            builder: (context) => const UserProfile(
                                 )),
                       );
                     },
@@ -67,8 +63,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
             backgroundColor: const Color.fromARGB(223, 134, 104, 218),
-            body: HomePageBody(
-              user: widget.user,
+            body: const HomePageBody(
             ),
             floatingActionButton: SpeedDial(
               animatedIcon: AnimatedIcons.add_event,

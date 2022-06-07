@@ -2,16 +2,13 @@ import 'package:catchem_ideas/app/features/home/cubit/home_cubit.dart';
 import 'package:catchem_ideas/app/features/home/idea_tile.dart';
 import 'package:catchem_ideas/app/features/manager/pages/idea_manager.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageBody extends StatefulWidget {
   const HomePageBody({
     Key? key,
-    required this.user,
   }) : super(key: key);
-  final User user;
 
   @override
   State<HomePageBody> createState() => HomePageBodyState();
