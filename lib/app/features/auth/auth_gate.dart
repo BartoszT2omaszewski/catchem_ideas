@@ -19,8 +19,6 @@ class AuthGate extends StatelessWidget {
             EmailProviderConfiguration(),
           ]);
         }
-
-        // Render your application if authenticated
         return const HomePage();
       },
     );
