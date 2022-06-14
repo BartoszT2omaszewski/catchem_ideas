@@ -8,6 +8,6 @@ https://user-images.githubusercontent.com/95141414/173573710-b2327efe-341a-40d4-
 
 It uses bloc state management and firebase backend.
 
-For future I plan to add diffrent inputs like photos and videos or voice recordings.
+For future I plan to make it a little social app with groups for brainstorming.
 
-Also I want to make it a little social app with groups for brainstorming.
+Also I want to add different inputs like photos and videos or voice recordings for people to share.
