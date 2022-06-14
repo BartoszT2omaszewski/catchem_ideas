@@ -2,6 +2,7 @@ import 'package:catchem_ideas/app/features/add/cubit/add_cubit.dart';
 import 'package:catchem_ideas/app/features/repositories/items_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 class AddPage extends StatefulWidget {
@@ -41,7 +42,11 @@ class _AddPageState extends State<AddPage> {
               appBar: AppBar(
                 centerTitle: true,
                 titleSpacing: 3,
-                title: const Text('Manage your ideas in Time'),
+                title: Text(
+                  'Manage your ideas in Time',
+                  style: GoogleFonts.jost(
+                      fontSize: 20, fontWeight: FontWeight.w500),
+                ),
                 actions: [
                   IconButton(
                     onPressed: _title == null || _ideaDate == null
@@ -100,6 +105,7 @@ class _AddPageBody extends StatelessWidget {
       ),
       children: [
         TextField(
+          maxLines: null,
           onChanged: onTitleChanged,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
@@ -120,7 +126,10 @@ class _AddPageBody extends StatelessWidget {
             );
             onDateChanged(selectedDate);
           },
-          child: Text(selectedDateFormatted ?? 'Choose your idea deadline'),
+          child: Text(
+            selectedDateFormatted ?? 'Choose your idea deadline',
+            style: GoogleFonts.jost(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
         ),
       ],
     );

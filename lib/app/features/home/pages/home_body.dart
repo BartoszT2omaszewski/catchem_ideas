@@ -3,18 +3,12 @@ import 'package:catchem_ideas/app/features/models/item_model.dart';
 import 'package:catchem_ideas/app/features/repositories/items_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class HomePageBody extends StatefulWidget {
+class HomePageBody extends StatelessWidget {
   const HomePageBody({
     Key? key,
   }) : super(key: key);
-
-  @override
-  State<HomePageBody> createState() => HomePageBodyState();
-}
-
-class HomePageBodyState extends State<HomePageBody> {
-  final controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +104,7 @@ class IdeaTileItem extends StatelessWidget {
       ),
       child: Container(
         decoration: const BoxDecoration(
-          color: Colors.black12,
+          color: Color.fromARGB(104, 230, 154, 41),
           borderRadius: BorderRadius.all(Radius.circular(14)),
         ),
         child: Column(
@@ -126,14 +120,14 @@ class IdeaTileItem extends StatelessWidget {
                       children: [
                         Text(
                           itemModel.title,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: GoogleFonts.jost(
+                              fontSize: 18, fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 10),
                         Text(
                           itemModel.ideaDateFormatted(),
+                          style: GoogleFonts.jost(
+                              fontSize: 14, fontWeight: FontWeight.w500),
                         ),
                       ],
                     ),
@@ -154,7 +148,11 @@ class IdeaTileItem extends StatelessWidget {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text('days left'),
+                      Text(
+                        'days left',
+                        style: GoogleFonts.jost(
+                            fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
                     ],
                   ),
                 ),
