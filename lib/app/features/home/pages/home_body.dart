@@ -1,136 +1,166 @@
 import 'package:catchem_ideas/app/features/home/cubit/home_cubit.dart';
-import 'package:catchem_ideas/app/features/home/idea_tile.dart';
-import 'package:catchem_ideas/app/features/manager/pages/idea_manager.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:catchem_ideas/app/features/models/item_model.dart';
+import 'package:catchem_ideas/app/features/repositories/items_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class HomePageBody extends StatefulWidget {
+class HomePageBody extends StatelessWidget {
   const HomePageBody({
     Key? key,
   }) : super(key: key);
 
   @override
-  State<HomePageBody> createState() => HomePageBodyState();
-}
-
-class HomePageBodyState extends State<HomePageBody> {
-  final controller = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(
-          height: 60,
-          child: Padding(
-            padding: const EdgeInsets.only(left: 20, right: 15, top: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+    return BlocProvider(
+      create: (context) => HomeCubit(ItemsRepository())..start(),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Column(
               children: [
-                const Text(
-                  'Thought inTime Manager',
-                  style: TextStyle(
-                      color: Color(0xFF00003f),
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold),
+                const Padding(
+                  padding: EdgeInsets.only(bottom: 12.0),
                 ),
-                IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const ManagerPage()),
-                      );
-                    },
-                    icon: const Icon(
-                      Icons.calendar_today,
-                      size: 36,
-                    )),
-              ],
-            ),
-          ),
-        ),
-        Expanded(
-          child: Column(
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(bottom: 6.0),
-              ),
-              Expanded(
-                flex: 1,
-                child: Container(
-                  width: double.infinity,
-                  decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30)),
-                    boxShadow: [BoxShadow(blurRadius: 10.0)],
-                  ),
-                  child: BlocProvider(
-                    create: (context) => HomeCubit()..start(),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30)),
+                      boxShadow: [BoxShadow(blurRadius: 10.0)],
+                    ),
                     child: BlocBuilder<HomeCubit, HomeState>(
                       builder: (context, state) {
-                        if (state.errorMessage.isNotEmpty) {
-                          return Text('Error: ${state.errorMessage}');
-                        }
-
-                        if (state.isLoading) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-
-                        final documents = state.documents;
+                        final itemModels = state.items;
 
                         return ListView(
-                          children: [
-                            for (final document in documents) ...[
-                              Dismissible(
-                                secondaryBackground: const DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 20,
+                            ),
+                            children: [
+                              for (final itemModel in itemModels)
+                                Dismissible(
+                                  secondaryBackground: const DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                    ),
+                                    child: Icon(
+                                      Icons.delete,
+                                    ),
                                   ),
-                                  child: Icon(
-                                    Icons.delete,
+                                  background: const DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                    ),
+                                  ),
+                                  confirmDismiss: (direction) async {
+                                    // only from right to left
+                                    return direction ==
+                                        DismissDirection.endToStart;
+                                  },
+                                  key: ValueKey(itemModel.id),
+                                  onDismissed: (direction) {
+                                    context
+                                        .read<HomeCubit>()
+                                        .remove(documentID: itemModel.id);
+                                  },
+                                  child: IdeaTileItem(
+                                    itemModel: itemModel,
                                   ),
                                 ),
-                                background: const DecoratedBox(
-                                  decoration: BoxDecoration(
-                                    color: Colors.green,
-                                  ),
-                                  child: Icon(Icons.settings),
-                                ),
-                                confirmDismiss: (direction) async {
-                                  // only from right to left
-                                  return direction ==
-                                      DismissDirection.endToStart;
-                                },
-                                key: ValueKey(document.id),
-                                onDismissed: (_) {
-                                  FirebaseFirestore.instance
-                                      .collection('ideas')
-                                      .doc(document.id)
-                                      .delete();
-                                },
-                                child: IdeaTileWidget(
-                                  document['title'],
-                                ),
-                              ),
-                            ],
-                          ],
-                        );
+                            ]);
                       },
                     ),
                   ),
                 ),
-              )
-            ],
+              ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+class IdeaTileItem extends StatelessWidget {
+  const IdeaTileItem({
+    Key? key,
+    required this.itemModel,
+  }) : super(key: key);
+
+  final ItemModel itemModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        vertical: 10,
+        horizontal: 30,
+      ),
+      child: Container(
+        decoration: const BoxDecoration(
+          color: Color.fromARGB(104, 230, 154, 41),
+          borderRadius: BorderRadius.all(Radius.circular(14)),
         ),
-      ],
+        child: Column(
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    margin: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          itemModel.title,
+                          style: GoogleFonts.jost(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        const SizedBox(height: 10),
+                        Text(
+                          itemModel.ideaDateFormatted(),
+                          style: GoogleFonts.jost(
+                              fontSize: 14, fontWeight: FontWeight.w500),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.white70,
+                  ),
+                  margin: const EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
+                  child: Column(
+                    children: [
+                      Text(
+                        itemModel.daysLeft(),
+                        style: const TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        'days left',
+                        style: GoogleFonts.jost(
+                            fontSize: 14, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
