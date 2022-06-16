@@ -1,10 +1,12 @@
 # catchem_ideas
 
-It's an app I use for writing down ideas for my future projects and having them nicely sorted in time so I can come back to them later and have them in one place.
+It's an app I use for writing down ideas for my future projects and having them nicely sorted in time so I can have them all in one place and come back to it later.
 
 Here's video showing it all
 
-https://user-images.githubusercontent.com/95141414/173573710-b2327efe-341a-40d4-8ee3-448e4be123af.mp4
+
+https://user-images.githubusercontent.com/95141414/174078793-fbb6d52c-6364-421f-804b-40c8f6a36f9e.mp4
+
 
 It uses bloc state management and firebase backend.
 
