@@ -2,8 +2,7 @@ import 'package:catchem_ideas/app/core/enums.dart';
 import 'package:catchem_ideas/app/features/articles/page/articles_page.dart';
 import 'package:catchem_ideas/app/features/models/author_model.dart';
 import 'package:catchem_ideas/app/features/motivation/cubit/motivation_cubit.dart';
-import 'package:catchem_ideas/app/features/repositories/authors_repository.dart';
-import 'package:catchem_ideas/data/remote_data_sources/authors_remote_data_source.dart';
+import 'package:catchem_ideas/app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,11 +16,7 @@ class MotivationPage extends StatelessWidget {
     return Scaffold(
       body: BlocProvider<MotivationCubit>(
         create: (context) {
-          return MotivationCubit(
-            authorsRepository: AuthorsRepository(
-              remoteDataSource: AuthorsRemoteDioDataSource(),
-            ),
-          )..start();
+          return getIt()..start();
         },
         child: BlocBuilder<MotivationCubit, MotivationState>(
           builder: (context, state) {

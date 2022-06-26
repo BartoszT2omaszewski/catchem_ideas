@@ -1,13 +1,17 @@
+import 'package:catchem_ideas/app/features/models/author_model.dart';
 import 'package:dio/dio.dart';
+import 'package:injectable/injectable.dart';
+import 'package:retrofit/retrofit.dart';
 
-class AuthorsRemoteDioDataSource {
-  Future<List<Map<String, dynamic>>?> getAuthors() async {
-    final response = await Dio().get<List<dynamic>>(
-        'https://my-json-server.typicode.com/adamsmaka/json-demo/users');
-    final listDynamic = response.data;
-    if (listDynamic == null) {
-      return null;
-    }
-    return listDynamic.map((e) => e as Map<String, dynamic>).toList();
-  }
+part 'authors_remote_data_source.g.dart';
+
+@injectable
+@RestApi()
+abstract class AuthorsRemoteRetrofitDataSource {
+  @factoryMethod
+  factory AuthorsRemoteRetrofitDataSource(Dio dio) =
+      _AuthorsRemoteRetrofitDataSource;
+
+  @GET("/users")
+  Future<List<AuthorModel>> getAuthors();
 }

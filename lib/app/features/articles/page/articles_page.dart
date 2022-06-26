@@ -2,8 +2,7 @@ import 'package:catchem_ideas/app/core/enums.dart';
 import 'package:catchem_ideas/app/features/articles/cubit/articles_cubit.dart';
 import 'package:catchem_ideas/app/features/models/article_model.dart';
 import 'package:catchem_ideas/app/features/models/author_model.dart';
-import 'package:catchem_ideas/app/features/repositories/articles_repository.dart';
-import 'package:catchem_ideas/data/remote_data_sources/articles_remote_data_source.dart';
+import 'package:catchem_ideas/app/injection_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,11 +21,8 @@ class ArticlesPage extends StatelessWidget {
         title: Text(author.name),
       ),
       body: BlocProvider<ArticlesCubit>(
-        create: (context) => ArticlesCubit(
-          articlesRepository: ArticlesRepository(
-            remoteDataSource: ArticlesRemoteDioDataSource(),
-          ),
-        )..fetchData(
+        create: (context) => getIt()
+          ..fetchData(
             authorId: author.id,
           ),
         child: Column(
