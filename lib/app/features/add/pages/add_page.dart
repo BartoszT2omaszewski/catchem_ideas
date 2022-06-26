@@ -109,8 +109,8 @@ class _AddPageBody extends StatelessWidget {
           onChanged: onTitleChanged,
           decoration: const InputDecoration(
             border: OutlineInputBorder(),
-            hintText: 'Matrix 5',
-            label: Text('Title'),
+            hintText: 'Typing ideas...',
+            label: Text('Add your idea'),
           ),
         ),
         const SizedBox(height: 20),
