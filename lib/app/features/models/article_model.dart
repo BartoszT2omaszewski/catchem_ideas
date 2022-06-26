@@ -5,9 +5,8 @@ part 'article_model.freezed.dart';
 
 @freezed
 class ArticleModel with _$ArticleModel {
-  factory ArticleModel(
-          int id, @JsonKey(name: 'author_id') int authorId, String content) =
-      _ArticleModel;
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  factory ArticleModel(int id, int authorId, String content) = _ArticleModel;
 
   factory ArticleModel.fromJson(Map<String, dynamic> json) =>
       _$ArticleModelFromJson(json);

@@ -22,9 +22,7 @@ AuthorModel _$AuthorModelFromJson(Map<String, dynamic> json) {
 mixin _$AuthorModel {
   int get id => throw _privateConstructorUsedError;
   String get picture => throw _privateConstructorUsedError;
-  @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
-  @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -38,11 +36,7 @@ abstract class $AuthorModelCopyWith<$Res> {
   factory $AuthorModelCopyWith(
           AuthorModel value, $Res Function(AuthorModel) then) =
       _$AuthorModelCopyWithImpl<$Res>;
-  $Res call(
-      {int id,
-      String picture,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName});
+  $Res call({int id, String picture, String firstName, String lastName});
 }
 
 /// @nodoc
@@ -88,11 +82,7 @@ abstract class _$$_AuthorModelCopyWith<$Res>
           _$_AuthorModel value, $Res Function(_$_AuthorModel) then) =
       __$$_AuthorModelCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {int id,
-      String picture,
-      @JsonKey(name: 'first_name') String firstName,
-      @JsonKey(name: 'last_name') String lastName});
+  $Res call({int id, String picture, String firstName, String lastName});
 }
 
 /// @nodoc
@@ -134,13 +124,10 @@ class __$$_AuthorModelCopyWithImpl<$Res> extends _$AuthorModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_AuthorModel extends _AuthorModel {
-  _$_AuthorModel(
-      this.id,
-      this.picture,
-      @JsonKey(name: 'first_name') this.firstName,
-      @JsonKey(name: 'last_name') this.lastName)
+  _$_AuthorModel(this.id, this.picture, this.firstName, this.lastName)
       : super._();
 
   factory _$_AuthorModel.fromJson(Map<String, dynamic> json) =>
@@ -151,10 +138,8 @@ class _$_AuthorModel extends _AuthorModel {
   @override
   final String picture;
   @override
-  @JsonKey(name: 'first_name')
   final String firstName;
   @override
-  @JsonKey(name: 'last_name')
   final String lastName;
 
   @override
@@ -194,11 +179,8 @@ class _$_AuthorModel extends _AuthorModel {
 }
 
 abstract class _AuthorModel extends AuthorModel {
-  factory _AuthorModel(
-      final int id,
-      final String picture,
-      @JsonKey(name: 'first_name') final String firstName,
-      @JsonKey(name: 'last_name') final String lastName) = _$_AuthorModel;
+  factory _AuthorModel(final int id, final String picture,
+      final String firstName, final String lastName) = _$_AuthorModel;
   _AuthorModel._() : super._();
 
   factory _AuthorModel.fromJson(Map<String, dynamic> json) =
@@ -209,10 +191,8 @@ abstract class _AuthorModel extends AuthorModel {
   @override
   String get picture => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'first_name')
   String get firstName => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'last_name')
   String get lastName => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
