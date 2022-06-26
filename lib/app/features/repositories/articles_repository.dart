@@ -1,8 +1,6 @@
 import 'package:catchem_ideas/app/features/models/article_model.dart';
 import 'package:catchem_ideas/data/remote_data_sources/articles_remote_data_source.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class ArticlesRepository {
   ArticlesRepository({required this.remoteDataSource});
 
