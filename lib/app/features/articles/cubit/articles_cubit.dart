@@ -2,8 +2,10 @@ import 'package:catchem_ideas/app/core/enums.dart';
 import 'package:catchem_ideas/app/features/models/article_model.dart';
 import 'package:catchem_ideas/app/features/repositories/articles_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'articles_state.dart';
+part 'articles_cubit.freezed.dart';
 
 class ArticlesCubit extends Cubit<ArticlesState> {
   ArticlesCubit({required this.articlesRepository}) : super(ArticlesState());
