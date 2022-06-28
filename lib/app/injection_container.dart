@@ -12,7 +12,7 @@ void configureDependencies() => $initGetIt(getIt);
 abstract class RegisterModule {
   @Named("BaseUrl")
   String get baseUrl =>
-      'https://my-json-server.typicode.com/adamsmaka/json-demo';
+      'https://my-json-server.typicode.com/BartoszT2omaszewski/demo_json';
 
   @lazySingleton
   Dio dio(@Named('BaseUrl') String url) => Dio(BaseOptions(baseUrl: url));
