@@ -109,11 +109,6 @@ class _ArticleItemWidget extends StatelessWidget {
                 child: Text(model.content),
               ),
               const SizedBox(width: 10),
-              const Icon(
-                Icons.arrow_right,
-                color: Colors.black,
-                size: 20,
-              ),
             ],
           ),
         ),

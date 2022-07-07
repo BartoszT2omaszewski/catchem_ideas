@@ -1,15 +1,17 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:intl/intl.dart';
 
-class ItemModel {
-  ItemModel({
-    required this.id,
-    required this.title,
-    required this.ideaDate,
-  });
+part 'item_model.g.dart';
+part 'item_model.freezed.dart';
 
-  final String id;
-  final String title;
-  final DateTime ideaDate;
+@freezed
+class ItemModel with _$ItemModel {
+  ItemModel._();
+  @JsonSerializable(fieldRename: FieldRename.snake)
+  factory ItemModel(
+      {required String id,
+      required String title,
+      required DateTime ideaDate}) = _ItemModel;
 
   String daysLeft() {
     return ideaDate.difference(DateTime.now()).inDays.toString();

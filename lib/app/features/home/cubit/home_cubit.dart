@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:catchem_ideas/app/features/models/item_model.dart';
 import 'package:catchem_ideas/app/features/repositories/items_repository.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'home_state.dart';
+part 'home_cubit.freezed.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   HomeCubit(this._itemsRepository)
       : super(
-          const HomeState(),
+          HomeState(),
         );
   final ItemsRepository _itemsRepository;
 
@@ -23,7 +24,7 @@ class HomeCubit extends Cubit<HomeState> {
       },
     )..onError(
         (error) {
-          emit(const HomeState(loadingErrorOccured: true));
+          emit(HomeState(loadingErrorOccured: true));
         },
       );
   }
@@ -33,7 +34,7 @@ class HomeCubit extends Cubit<HomeState> {
       await _itemsRepository.delete(id: documentID);
     } catch (error) {
       emit(
-        const HomeState(removingErrorOccured: true),
+        HomeState(removingErrorOccured: true),
       );
       start();
     }
