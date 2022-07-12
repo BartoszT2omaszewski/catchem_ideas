@@ -18,34 +18,7 @@ class HomePageBody extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 60,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 40, top: 12),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    'Motivation Well',
-                    style: GoogleFonts.lobster(
-                        fontSize: 36, fontWeight: FontWeight.w200),
-                  ),
-                  IconButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const MotivationPage()),
-                        );
-                      },
-                      icon: const Icon(
-                        Icons.water_drop,
-                        size: 36,
-                      )),
-                ],
-              ),
-            ),
-          ),
+          const MotivationNavigationBox(),
           Expanded(
             child: Column(
               children: [
@@ -111,6 +84,44 @@ class HomePageBody extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MotivationNavigationBox extends StatelessWidget {
+  const MotivationNavigationBox({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 60,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 40, top: 12),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Text(
+              'Motivation Well',
+              style: GoogleFonts.lobster(
+                  fontSize: 36, fontWeight: FontWeight.w200),
+            ),
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const MotivationPage()),
+                  );
+                },
+                icon: const Icon(
+                  Icons.water_drop,
+                  size: 36,
+                )),
+          ],
+        ),
       ),
     );
   }

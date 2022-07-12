@@ -33,22 +33,8 @@ class _HomePageState extends State<HomePage> {
                 GoogleFonts.pacifico(fontSize: 36, fontWeight: FontWeight.w200),
           ),
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: IconButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const UserProfile()),
-                );
-              },
-              icon: const Icon(
-                Icons.person,
-                size: 38,
-              ),
-            ),
-          ),
+        actions: const [
+          UserProfileButton(),
         ],
       ),
       backgroundColor: const Color.fromARGB(223, 134, 104, 218),
@@ -63,6 +49,31 @@ class _HomePageState extends State<HomePage> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class UserProfileButton extends StatelessWidget {
+  const UserProfileButton({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: IconButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const UserProfile()),
+          );
+        },
+        icon: const Icon(
+          Icons.person,
+          size: 38,
+        ),
       ),
     );
   }

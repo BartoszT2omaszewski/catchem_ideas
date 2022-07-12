@@ -114,24 +114,42 @@ class _AddPageBody extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 20),
-        ElevatedButton(
-          onPressed: () async {
-            final selectedDate = await showDatePicker(
-              context: context,
-              initialDate: DateTime.now(),
-              firstDate: DateTime.now(),
-              lastDate: DateTime.now().add(
-                const Duration(days: 365 * 10),
-              ),
-            );
-            onDateChanged(selectedDate);
-          },
-          child: Text(
-            selectedDateFormatted ?? 'Choose your idea deadline',
-            style: GoogleFonts.jost(fontSize: 14, fontWeight: FontWeight.w500),
-          ),
-        ),
+        IdeaTimeButton(
+            onDateChanged: onDateChanged,
+            selectedDateFormatted: selectedDateFormatted),
       ],
+    );
+  }
+}
+
+class IdeaTimeButton extends StatelessWidget {
+  const IdeaTimeButton({
+    Key? key,
+    required this.onDateChanged,
+    required this.selectedDateFormatted,
+  }) : super(key: key);
+
+  final Function(DateTime? p1) onDateChanged;
+  final String? selectedDateFormatted;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () async {
+        final selectedDate = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime.now().add(
+            const Duration(days: 365 * 10),
+          ),
+        );
+        onDateChanged(selectedDate);
+      },
+      child: Text(
+        selectedDateFormatted ?? 'Choose your idea deadline',
+        style: GoogleFonts.jost(fontSize: 14, fontWeight: FontWeight.w500),
+      ),
     );
   }
 }
